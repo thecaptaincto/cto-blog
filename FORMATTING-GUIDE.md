@@ -99,18 +99,16 @@ Here's how all these elements work together in a blog post:
 ```html
 <h2>My Trip to Paris</h2>
 
-<p>Last summer, I visited <strong>San Francisco</strong> for the first time. It was an <em>amazing</em> experience that I'll never forget.</p>
+<p>Last summer, I visited <strong>Paris</strong> for the first time. It was an <em>amazing</em> experience that I'll never forget.</p>
 
 <h3>Places I Visited</h3>
 
 <p>Here are the highlights of my trip:</p>
 
 <ul>
-    <li>The Golden Gate Bridge</li>
-    <li>Alcatraz Island</li>
-    <li>Chinatown</li>
-    <li>The Painted Ladies</li>
-    <li>Lombard Street</li>
+    <li>The Eiffel Tower</li>
+    <li>The Louvre Museum</li>
+    <li>Notre-Dame Cathedral</li>
 </ul>
 
 <h3>What I Learned</h3>
@@ -121,7 +119,7 @@ Here's how all these elements work together in a blog post:
     Travel changes you in ways you never expect.
 </blockquote>
 
-<p>I would <strong><em>highly recommend</em></strong> San Francisco to anyone!</p>
+<p>I would <strong><em>highly recommend</em></strong> Paris to anyone!</p>
 ```
 
 ## SPECIAL STYLING ALREADY IN YOUR BLOG
