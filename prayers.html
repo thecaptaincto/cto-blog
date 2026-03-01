@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prières & Intercessions — Caleb Chang He</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5ead8;
+    --parchment-mid: #eedcc0;
+    --ink: #2c1a0e;
+    --ink-faded: #5c3d2e;
+    --rust: #8b3a1e;
+    --gold: #c8952a;
+    --gold-light: #e8c05a;
+    --moss: #4a5e3a;
+    --deep-blue: #1e3a5c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--parchment);
+    color: var(--ink);
+    font-family: 'Spectral', Georgia, serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 10% 15%, rgba(30,58,92,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 60% at 90% 80%, rgba(139,58,30,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(200,149,42,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Nav */
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 2rem;
+    text-decoration: none;
+    color: var(--rust);
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    transition: gap 0.2s;
+    position: relative;
+    z-index: 10;
+  }
+  .nav-back:hover { gap: 0.8rem; }
+
+  /* Page header */
+  .page-header {
+    text-align: center;
+    padding: 1rem 2rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .header-label {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--rust);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+    text-shadow: 2px 2px 0 rgba(139,58,30,0.12);
+  }
+
+  .page-subject {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-faded);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Ornamental border */
+  .ornamental-border {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+  .ornamental-border::before,
+  .ornamental-border::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rust) 30%, var(--gold) 50%, var(--rust) 70%, transparent);
+    opacity: 0.5;
+  }
+  .ornament-center {
+    color: var(--gold);
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+
+  .intro-note {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-faded);
+    font-style: italic;
+    padding: 1rem 1.5rem;
+    border-left: 2px solid rgba(139,58,30,0.3);
+    background: rgba(200,149,42,0.04);
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+
+  /* Table of contents */
+  .toc-wrapper {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  .toc-box {
+    background: linear-gradient(145deg, rgba(253,245,230,0.9), rgba(232,208,160,0.6));
+    border: 1px solid rgba(139,58,30,0.3);
+    padding: 1.8rem 2.2rem;
+    position: relative;
+    box-shadow: 2px 2px 8px rgba(44,26,14,0.1);
+  }
+
+  .toc-box::before, .toc-box::after {
+    content: '†';
+    position: absolute;
+    color: var(--gold);
+    opacity: 0.4;
+    font-size: 1.2rem;
+  }
+  .toc-box::before { top: 0.5rem; left: 0.8rem; }
+  .toc-box::after { bottom: 0.5rem; right: 0.8rem; }
+
+  .toc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    opacity: 0.8;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .toc-list {
+    list-style: none;
+  }
+
+  .toc-item a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--ink-faded);
+    font-family: 'Spectral', serif;
+    font-size: 0.92rem;
+    line-height: 2;
+    transition: color 0.2s;
+    padding: 0.1rem 0;
+  }
+  .toc-item a:hover { color: var(--rust); }
+
+  .toc-num {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    opacity: 0.8;
+    flex-shrink: 0;
+    width: 1.8rem;
+  }
+
+  .toc-dots {
+    flex: 1;
+    border-bottom: 1px dotted rgba(139,58,30,0.25);
+    margin: 0 0.3rem 0.15rem;
+  }
+
+  /* Main content */
+  .prayer-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* Chapter sections */
+  .chapter {
+    margin-bottom: 4rem;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(15px);
+  }
+  .chapter.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chapter-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 2rem 1.5rem;
+    background: linear-gradient(to bottom, rgba(200,149,42,0.06), transparent);
+    border-top: 1px solid rgba(200,149,42,0.3);
+    position: relative;
+  }
+
+  .chapter-ornament-top {
+    font-size: 1.3rem;
+    color: var(--gold);
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter-label {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    opacity: 0.8;
+    margin-bottom: 0.4rem;
+  }
+
+  .chapter-number {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 5rem;
+    color: rgba(139,58,30,0.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.35;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section subheadings */
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--rust);
+    margin: 2rem 0 0.8rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(139,58,30,0.3);
+  }
+
+  /* Prayer body text */
+  .prayer-body {
+    font-size: 0.98rem;
+    line-height: 1.9;
+    color: var(--ink-faded);
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .prayer-body p {
+    margin-bottom: 1.2em;
+    position: relative;
+  }
+
+  /* Drop cap for first paragraph of each chapter */
+  .chapter .prayer-body p:first-of-type::first-letter {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin-right: 0.1em;
+    margin-top: 0.1em;
+    color: var(--rust);
+    text-shadow: 2px 2px 4px rgba(139,58,30,0.15);
+  }
+
+  .amen-line {
+    text-align: center;
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 1.6rem;
+    color: var(--rust);
+    opacity: 0.8;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(139,58,30,0.15);
+  }
+
+  /* Scripture verses section */
+  .scriptures-section {
+    margin-top: 5rem;
+    border-top: 2px solid rgba(139,58,30,0.2);
+    padding-top: 3rem;
+  }
+
+  .scriptures-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .scriptures-header .chapter-label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .scriptures-header h2 {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.2rem;
+    color: var(--ink);
+    text-shadow: 1px 1px 0 rgba(139,58,30,0.1);
+  }
+
+  .verse-block {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem 1.8rem;
+    background: linear-gradient(145deg, rgba(253,245,230,0.7), rgba(232,208,160,0.4));
+    border: 1px solid rgba(139,58,30,0.18);
+    position: relative;
+    box-shadow: 1px 2px 5px rgba(44,26,14,0.08);
+  }
+
+  .verse-block::before {
+    content: '"';
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 6rem;
+    color: rgba(200,149,42,0.12);
+    position: absolute;
+    top: -1rem;
+    left: 0.8rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .verse-ref {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--rust);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .verse-text {
+    font-family: 'Spectral', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink);
+    font-style: italic;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(139,58,30,0.12);
+  }
+
+  .verse-reflection {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--ink-faded);
+  }
+
+  /* Chapter divider */
+  .chapter-divider {
+    text-align: center;
+    margin: 3rem 0;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 1.1rem;
+    letter-spacing: 0.8em;
+  }
+
+  /* Closing */
+  .prayer-closing {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(139,58,30,0.2);
+    border-bottom: 1px solid rgba(139,58,30,0.2);
+    background: linear-gradient(to bottom, rgba(200,149,42,0.04), transparent);
+  }
+
+  .prayer-closing p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-faded);
+    line-height: 1.8;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .closing-seal {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 2.5rem;
+    color: var(--rust);
+    opacity: 0.6;
+    margin-top: 1rem;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="nav-back">← Retourner au Livre</a>
+
+<header class="page-header">
+  <div class="header-label">Tome Second</div>
+  <h1 class="page-title">Prières & Intercessions</h1>
+  <p class="page-subject">Pour Caleb Chang He — En Sept Chapitres</p>
+  <div class="ornamental-border"><span class="ornament-center">✦ ✝ ✦</span></div>
+  <p class="intro-note">Cette prière en sept chapitres a été prononcée avec sincérité et amour pour Caleb Chang He, afin que le Seigneur Tout-Puissant le délivre de l'emprise d'Edgar dans Brawl Stars, qu'Il épanouisse ses dons extraordinaires, et qu'Il le conduise vers la plénitude de la vie éternelle qui lui est destinée.</p>
+</header>
+
+<!-- Table of Contents -->
+<div class="toc-wrapper">
+  <div class="toc-box">
+    <div class="toc-title">Table des Matières</div>
+    <ul class="toc-list">
+      <li class="toc-item"><a href="#ch1"><span class="toc-num">I</span><span>L'Appel à la Grâce Divine</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#ch2"><span class="toc-num">II</span><span>Présentation Complète d'Edgar</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#ch3"><span class="toc-num">III</span><span>Prière pour les Victimes d'Edgar</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#ch4"><span class="toc-num">IV</span><span>La Famille et les Proches</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#ch5"><span class="toc-num">V</span><span>Les Mathématiques comme Vocation</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#ch6"><span class="toc-num">VI</span><span>Les Nombreuses Qualités de Caleb</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#ch7"><span class="toc-num">VII</span><span>Les Anecdotes Fascinantes</span><span class="toc-dots"></span></a></li>
+      <li class="toc-item"><a href="#verses"><span class="toc-num">✦</span><span>Versets Bibliques & Réflexions</span><span class="toc-dots"></span></a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Prayer content -->
+<div class="prayer-content">
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Premier</div>
+      <div class="chapter-number">I</div>
+      <h2 class="chapter-title">L'Appel à la Grâce Divine<br><em>pour Caleb Chang He</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Seigneur Tout-Puissant, Père Céleste, Créateur de toutes choses visibles et invisibles, je viens devant Toi aujourd'hui avec un cœur sincère et une âme chargée d'inquiétude pour mon ami bien-aimé, Caleb Chang He. Je m'approche de Ton trône de grâce avec humilité, sachant que Tu es le seul qui peut véritablement toucher le cœur d'un homme, le seul qui peut briser toute chaîne invisible qui l'entoure, le seul dont la lumière peut pénétrer même dans les recoins les plus sombres de l'attachement humain.</p>
+      <p>Seigneur, Tu connais Caleb Chang He. Tu l'as connu avant même qu'il fût formé dans le ventre de sa mère. Tu connais chaque pensée qui traverse son esprit, chaque heure qu'il passe devant son écran, chaque partie qu'il lance dans ce jeu appelé Brawl Stars, et plus particulièrement, Père, Tu connais la profonde et troublante affection qu'il a développée pour ce personnage que l'on appelle Edgar.</p>
+      <p>Ô Dieu de miséricorde et de compassion, Tu sais que je ne viens pas ici pour condamner mon ami Caleb Chang He. Je ne suis pas son juge. Tu es le seul juge, Seigneur, et c'est précisément pourquoi je me tourne vers Toi plutôt que vers lui avec des reproches. Edgar est devenu, dans la vie quotidienne de Caleb Chang He, une présence constante, une identité presque, un alter ego que mon ami chérit avec une dévotion que je ne puis contempler sans ressentir un frisson d'inquiétude pour son âme.</p>
+      <p>Je Te demande, Seigneur, d'ouvrir les yeux spirituels de Caleb Chang He en ce premier souffle de cette prière. Que ce Chapitre Premier de mon intercession soit comme une graine plantée dans le sol de Ta volonté divine. Que Tu commences, dès aujourd'hui, dès maintenant, à travailler dans le cœur de Caleb Chang He, à lui montrer doucement mais clairement que l'attachement excessif à Edgar ne peut lui apporter ni paix véritable, ni joie durable, ni salut éternel.</p>
+      <p>Père, je Te supplie : Regarde Caleb Chang He là où il se trouve en ce moment. Peut-être est-il en train de jouer Edgar à l'instant même où je prononce ces mots. Que Ton Esprit Saint descende sur Caleb Chang He, même au milieu d'une partie de Brawl Stars, et qu'il commence à ressentir dans son cœur une légère mais irrésistible conviction que quelque chose doit changer.</p>
+      <p>Car Seigneur, il ne s'agit pas simplement d'un jeu vidéo. Il s'agit de l'âme de Caleb Chang He, de sa relation avec Toi, de la place que Tu occupes — ou que Tu n'occupes pas encore pleinement — dans sa vie. Et c'est pour cela que je crie à Toi aujourd'hui, avec toute la ferveur de mon cœur.</p>
+    </div>
+    <div class="amen-line">Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✦ ✦</div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Second</div>
+      <div class="chapter-number">II</div>
+      <h2 class="chapter-title">Présentation Complète d'Edgar,<br><em>le Personnage qui Tourmente l'Esprit de Mon Frère</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Seigneur Dieu, Père de Toute Lumière et Toute Vérité, je reviens devant Toi dans ce deuxième chapitre de mon intercession pour Caleb Chang He, et je sens dans mon cœur que pour prier efficacement, pour intercéder avec précision et avec connaissance, je dois nommer clairement devant Ton trône céleste ce personnage qu'est Edgar — ce personnage de Brawl Stars qui a capturé l'attention, l'affection et le temps précieux de mon frère en Christ.</p>
+      <p>Père Éternel, laisse-moi Te présenter Edgar. Edgar est un personnage — un Brawler, comme on l'appelle dans le langage de ce jeu — qui existe dans l'univers de Brawl Stars, ce jeu développé par la compagnie Supercell. Edgar n'est pas une créature de chair et de sang, Seigneur, Tu le sais. Il est fait de données, d'algorithmes, de pixels soigneusement assemblés par des développeurs humains.</p>
+
+      <div class="section-heading">Edgar, l'Assassin aux Poings Meurtriers</div>
+      <p>Edgar est, d'abord et avant tout, un personnage de type Assassin dans Brawl Stars. Oui, Père Céleste, Tu entends bien ce mot : Assassin. Edgar appartient à cette catégorie de Brawlers conçus pour éliminer rapidement les adversaires, pour fondre sur eux avec une vitesse dévastatrice, pour détruire avant d'être détruit. Et je me demande, Seigneur, si Caleb Chang He, en jouant Edgar encore et encore, n'intègre pas inconsciemment dans son esprit cette mentalité de l'assassin.</p>
+      <p>Edgar se présente dans Brawl Stars comme un adolescent au regard sombre, aux cheveux noirs, vêtu de noir, arborant l'esthétique de ce que l'on appelle communément la culture emo ou goth. Son apparence visuelle n'est pas celle d'un héros triomphant baigné de lumière — non, Seigneur. Edgar est enveloppé d'une atmosphère sombre, presque nihiliste, qui contraste radicalement avec la joie, la paix et l'espérance que Tu offres.</p>
+
+      <div class="section-heading">Les Capacités d'Edgar et leur Symbolique</div>
+      <p>Edgar est équipé dans Brawl Stars d'une attaque de base : une série de coups portés directement au corps de ses adversaires. Il se bat au corps à corps, Père. Il ne se tient pas à distance, il ne cherche pas la réconciliation. Non. Edgar fonce sur ses ennemis et les frappe, encore et encore, sans relâche. Et chaque fois qu'il frappe, il se soigne lui-même — oui, Seigneur, Edgar tire sa propre guérison de la douleur qu'il inflige aux autres. Quelle image troublante pour l'âme de Caleb Chang He !</p>
+      <p>La capacité spéciale d'Edgar lui permet de bondir dans les airs avec une agilité surnaturelle et de s'abattre sur ses adversaires depuis une distance considérable. Ce bond, ce saut qui le propulse par-dessus les obstacles — voilà le mouvement signature d'Edgar. Et je vois, Seigneur, comment Caleb Chang He a maîtrisé ce bond, comment il l'utilise avec une précision qui témoigne de longues heures d'entraînement, d'un dévouement à ce personnage qui me touche au cœur car je sais que ce même dévouement, dirigé vers Toi, produirait des fruits éternels.</p>
+      <p>Voilà donc qui est Edgar, Seigneur. Un Assassin. Un personnage sombre et mélancolique. Un combattant au corps à corps qui se nourrit de la douleur des autres. Maintenant que j'ai exposé Edgar devant Toi dans toute sa complexité, je Te supplie de laisser Ta lumière divine commencer à révéler à Caleb Chang He que l'ombre d'Edgar, si familière et si confortable qu'elle soit devenue, ne peut rivaliser avec la lumière de Ta présence.</p>
+    </div>
+    <div class="amen-line">Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✦ ✦</div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Troisième</div>
+      <div class="chapter-number">III</div>
+      <h2 class="chapter-title">Prière pour les Êtres que Caleb Chang He<br><em>a Tourmentés en Jouant Edgar</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Dieu de Justice et de Compassion, Consolateur des Affligés et Défenseur des Opprimés, je reviens devant Toi dans ce troisième chapitre de mon intercession, et cette fois, Seigneur, mon cœur se tourne non seulement vers Caleb Chang He, mais aussi vers ceux qui ont souffert de ses actions dans les arènes de Brawl Stars. Car chaque joueur derrière un écran est une âme précieuse créée à Ton image, Seigneur.</p>
+
+      <div class="section-heading">Le Jeune Enfant et l'Adolescent Fragilisé</div>
+      <p>Il y a peut-être, Père, un jeune enfant de dix ans, assis dans sa chambre après une longue journée d'école, fatigué mais heureux de retrouver son jeu favori. Il lance Brawl Stars avec un sourire sur les lèvres — et soudain, avant même qu'il ait eu le temps de comprendre ce qui se passait, le Edgar de Caleb Chang He a bondi sur lui depuis l'autre bout de la carte, l'a éliminé en une fraction de seconde, et l'enfant se retrouve à regarder l'écran de défaite avec des larmes au bord des yeux. Père, je Te prie pour cet enfant.</p>
+      <p>Il y a peut-être aussi, Seigneur, un adolescent qui traversait déjà une période difficile dans sa vie — des problèmes à l'école, des tensions à la maison, une solitude que seul Tu connais dans toute sa profondeur. Cet adolescent s'est tourné vers Brawl Stars comme vers un espace de refuge. Et c'est dans cet espace de refuge que le Edgar de Caleb Chang He l'a trouvé, encore et encore, partie après partie, le chassant à travers les maps avec une précision implacable. Père, je Te prie pour cet adolescent.</p>
+
+      <div class="section-heading">Les Joueurs Expérimentés et les Équipes Défaites</div>
+      <p>Je pense aussi, Seigneur, aux joueurs plus expérimentés que l'Edgar de Caleb Chang He a humiliés. Edgar est souvent perçu dans la communauté de Brawl Stars comme un choix de joueur débutant. Et pourtant, Caleb Chang He a élevé Edgar à un niveau de maîtrise tel que même les joueurs expérimentés se sont retrouvés terrassés par ce personnage qu'ils sous-estimaient. L'humiliation est double : perdre contre Edgar, et perdre contre le Edgar de Caleb Chang He spécifiquement.</p>
+      <p>Car Brawl Stars est souvent un jeu d'équipe, Seigneur. Lorsque l'Edgar de Caleb Chang He s'abat sur une équipe avec la précision d'un faucon fondant sur sa proie, ce n'est pas un seul joueur qui souffre — c'est une équipe entière. Ce sont des coéquipiers qui se retrouvent à se reprocher mutuellement la défaite. Peut-être, Père, que quelque part dans le monde, une amitié a été fissurée à cause d'une défaite infligée par l'Edgar de Caleb Chang He.</p>
+
+      <div class="section-heading">La Prière pour Caleb Chang He Lui-Même</div>
+      <p>Et maintenant, Père, voici la partie la plus délicate de ce chapitre. Je Te demande, Seigneur, que Caleb Chang He lui-même commence à prendre conscience de l'impact de ses actions. Non pas pour qu'il soit écrasé par la culpabilité — car Tu n'es pas un Dieu qui condamne, mais un Dieu qui restaure. Mais que Caleb Chang He, dans son cœur, commence à voir ces visages invisibles derrière les noms d'utilisateurs qu'il a vaincus. Car Ta Parole nous enseigne de faire aux autres ce que nous voudrions qu'ils nous fassent.</p>
+    </div>
+    <div class="amen-line">Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✦ ✦</div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Quatrième</div>
+      <div class="chapter-number">IV</div>
+      <h2 class="chapter-title">Prière pour la Famille de Caleb Chang He,<br><em>ses Amis, et Toutes ses Personnes Proches</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Dieu de la Famille, Dieu des Relations, Dieu qui as placé les solitaires dans des foyers et tissé les liens d'amour entre les êtres humains depuis la création du monde, je reviens devant Toi dans ce quatrième chapitre, et cette fois, Seigneur, mon regard s'étend au-delà des arènes numériques de Brawl Stars pour se poser sur le cercle de chair et de sang, d'amitié et de proximité, qui entoure mon frère en Christ.</p>
+
+      <div class="section-heading">I. Une Prière pour les Parents de Caleb Chang He</div>
+      <p>Ô Père Céleste, Toi qui es le Père de tous les pères et la Source de tout amour parental, je Te présente en premier lieu les parents de Caleb Chang He. Ces deux êtres précieux que Tu as choisis, dans Ta providence souveraine, pour être les gardiens terrestres de l'âme de Caleb Chang He depuis sa naissance. Ces deux personnes qui ont tenu Caleb Chang He dans leurs bras lorsqu'il était encore un nourrisson.</p>
+      <p>Seigneur, je prie pour le père de Caleb Chang He — cet homme qui a peut-être, à plusieurs reprises, frappé doucement à la porte de la chambre de son fils pour lui dire que le dîner était prêt, pour lui rappeler qu'il avait des devoirs à faire, et qui a reçu pour toute réponse un "encore cinq minutes" qui s'est étiré en une heure. Je prie aussi pour la mère de Caleb Chang He, dont l'amour pour son fils est d'une profondeur que seul un cœur maternel peut connaître. Que Ta main consolatrice soit sur elle.</p>
+      <p>Donne aux deux parents de Caleb Chang He une unité dans leur approche. Qu'ils ne se divisent pas sur la question d'Edgar — l'un trop sévère, l'autre trop indulgent — mais qu'ils trouvent ensemble, guidés par Ton Esprit Saint, la voie du milieu qui combine amour et fermeté, grâce et vérité.</p>
+
+      <div class="section-heading">II. Une Prière pour la Petite Sœur de Caleb Chang He</div>
+      <p>Ô Seigneur Dieu, Toi qui as créé les liens fraternels comme un reflet de Ta propre relation avec Ton peuple, je Te présente maintenant la petite sœur de Caleb Chang He. Cette enfant précieuse grandit aux côtés de son frère aîné, et ce qu'elle observe chez lui forge silencieusement sa propre conception du monde. Elle voit peut-être un frère qui décline de jouer avec elle parce qu'il est en pleine partie.</p>
+      <p>Seigneur, je prie pour que la petite sœur de Caleb Chang He ne soit pas blessée dans son cœur d'enfant par les absences répétées de son frère. Et je prie, Père, pour que Caleb Chang He, touché par Ton Esprit Saint, commence à voir dans les yeux de sa petite sœur une raison supplémentaire de réévaluer sa relation avec Edgar.</p>
+
+      <div class="section-heading">III. Une Prière pour les Amis de Caleb Chang He</div>
+      <p>Ô Dieu qui as dit qu'il n'est pas bon que l'homme soit seul, je Te présente maintenant les amis de Caleb Chang He. Je pense à ces amis qui ont peut-être tenté d'organiser des sorties avec Caleb Chang He et qui ont reçu des déclins ou des participations distraites. Je prie pour que ces amis ne se découragent pas. Qu'ils continuent de tendre la main à Caleb Chang He. Qu'ils soient, entre les mains de Ton Esprit Saint, des instruments de rappel — des voix douces qui appellent Caleb Chang He à revenir dans le monde réel.</p>
+    </div>
+    <div class="amen-line">Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✦ ✦</div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Cinquième</div>
+      <div class="chapter-number">V</div>
+      <h2 class="chapter-title">La Passion pour les Mathématiques de Caleb Chang He<br><em>Remplacerait Parfaitement sa Passion pour Edgar</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Dieu de l'Ordre, de la Logique et de la Beauté Infinie, Toi qui as créé l'univers selon des principes mathématiques d'une précision et d'une élégance qui défient l'imagination humaine, je reviens devant Toi dans ce cinquième chapitre, et cette fois, Seigneur, mon cœur est rempli non seulement de supplication mais aussi d'espérance. Car dans Ta providence souveraine et bienveillante, Tu as déjà placé dans le cœur et l'esprit de Caleb Chang He une passion extraordinaire : sa passion pour les mathématiques.</p>
+
+      <div class="section-heading">Les Mathématiques comme Don Divin</div>
+      <p>Père Éternel, je Te remercie d'avoir équipé Caleb Chang He d'un esprit mathématique. Car ce n'est pas une chose ordinaire, Seigneur. La capacité de voir le monde à travers le prisme des nombres, des structures, des patterns et des relations logiques est un don que Tu n'accordes pas à tous. Et ce don n'est pas accidentel. Tu as donné à Caleb Chang He cette passion pour les mathématiques avec une intention, un dessein, un plan qui s'étend bien au-delà de ce que Caleb Chang He lui-même peut percevoir en ce moment.</p>
+      <p>Car vois-Tu, Seigneur, ce qui est remarquable dans cette situation ? Caleb Chang He possède déjà en lui l'antidote à sa propre dépendance envers Edgar. La passion qui peut le libérer est déjà là, déjà vivante en lui, déjà présente dans son cœur et son esprit — elle attend simplement d'être reconnue, nourrie et élevée à la place qu'elle mérite dans sa vie.</p>
+
+      <div class="section-heading">Les Parallèles Profonds : Edgar et les Mathématiques</div>
+      <p>Je crois, Père, que Caleb Chang He cherche dans Edgar des choses très précises — des besoins légitimes de l'âme humaine qu'Edgar satisfait de manière artificielle et temporaire, mais que les mathématiques pourraient satisfaire de manière authentique, profonde et durable. Il cherche dans Edgar le frisson de la maîtrise ; les mathématiques offrent ce même frisson, multiplié par mille, car elles sont infinies — elles ne se laissent jamais entièrement maîtriser.</p>
+      <p>Il cherche dans Edgar la résolution de problèmes. Mais les mathématiques offrent des problèmes d'une beauté, d'une richesse et d'une profondeur que Brawl Stars ne pourra jamais égaler. Un problème mathématique bien posé peut occuper un esprit brillant pendant des jours, des semaines, parfois des années. Les mathématiciens les plus grands de l'histoire ont consacré leur vie entière à la résolution d'un seul problème.</p>
+
+      <div class="section-heading">Les Mathématiques comme Chemin vers Toi</div>
+      <p>Ô Seigneur, Mathématicien Suprême, Architecte de l'Univers — Tu as créé cet univers selon des structures mathématiques d'une beauté et d'une précision stupéfiantes. Les nombres premiers, les fractales, la suite de Fibonacci que l'on retrouve dans les spirales des coquillages et des galaxies — tout cela est l'empreinte de Ta main, Père. Et chaque fois que Caleb Chang He résoudra un problème difficile avec l'élégance et la précision que les mathématiques exigent, il ne fera pas autre chose que de penser Tes pensées après Toi.</p>
+      <p>Père Tout-Puissant, je Te supplie : opère en Caleb Chang He une transformation progressive mais irrésistible. Que l'attrait d'Edgar commence à pâlir dans son esprit et dans son cœur. Envoie sur le chemin de Caleb Chang He un problème mathématique extraordinaire — un problème si beau, si élégant, si challengeant qu'il capturera l'imagination de mon ami avec la même intensité qu'Edgar l'a capturée, mais cette fois pour le mener vers la lumière.</p>
+    </div>
+    <div class="amen-line">Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✦ ✦</div>
+
+  <!-- CHAPTER 6 -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Sixième</div>
+      <div class="chapter-number">VI</div>
+      <h2 class="chapter-title">Les Nombreuses Qualités de Caleb Chang He<br><em>que le Seigneur Tout-Puissant lui a Accordées</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Dieu Créateur, Père de Toute Perfection, Toi qui formes chaque être humain avec soin et intention dans le secret du ventre maternel, je reviens devant Toi dans ce sixième chapitre, et cette fois, Seigneur, mon cœur déborde non pas de supplication anxieuse mais de gratitude et d'émerveillement. Car Caleb Chang He n'est pas simplement un joueur d'Edgar qui a besoin d'être corrigé ou délivré. Il est, avant tout et fondamentalement, un être extraordinaire.</p>
+
+      <div class="section-heading">I. Son Intelligence Exceptionnelle</div>
+      <p>Ô Dieu de Toute Sagesse et de Toute Connaissance, je Te rends grâce en premier lieu pour l'intelligence remarquable que Tu as accordée à Caleb Chang He. Car cet homme possède un esprit d'une acuité et d'une vivacité qui ne passent pas inaperçus auprès de ceux qui le côtoient. Caleb Chang He pense vite, Seigneur. Il analyse rapidement. Il perçoit des connexions et des patterns là où d'autres ne voient que du chaos. Son esprit est comme une lame bien affûtée — précis, efficace, capable de trancher au cœur des problèmes avec une clarté qui impressionne.</p>
+
+      <div class="section-heading">II. Sa Persévérance et sa Détermination</div>
+      <p>Père Éternel, je Te rends grâce pour la persévérance extraordinaire de Caleb Chang He. Car voici une qualité que l'on ne peut nier en observant la relation de Caleb Chang He avec Edgar : cet homme ne abandonne pas. Il revient. Encore et encore, partie après partie, session après session, il retourne à Edgar avec une détermination qui témoigne d'une capacité de persévérance profondément ancrée dans son caractère. Les défaites ne le découragent pas durablement. La difficulté ne le fait pas capituler.</p>
+
+      <div class="section-heading">III. Son Esprit Compétitif et son Désir d'Excellence</div>
+      <p>Ô Dieu qui nous appelles à l'excellence, je Te rends grâce pour l'esprit compétitif que Tu as insufflé en Caleb Chang He. Car Caleb Chang He ne se contente pas de la médiocrité. Il joue pour gagner. Il joue pour s'améliorer. Ce désir d'excellence, Père Céleste, est un don que Tu as placé en lui. Et c'est un don précieux, car le monde a besoin d'hommes et de femmes qui refusent la médiocrité, qui poussent les frontières de ce qui est possible.</p>
+
+      <div class="section-heading">IV. Sa Loyauté, sa Sensibilité & son Humour</div>
+      <p>Quand Caleb Chang He s'attache à quelque chose ou à quelqu'un, il s'y attache profondément et durablement. Il ne change pas de favori à chaque mise à jour du jeu. Il reste fidèle à Edgar, même dans les moments où Edgar n'est peut-être pas le choix le plus stratégique. Un homme capable d'une telle loyauté envers un personnage de pixels est un homme capable d'une loyauté extraordinaire envers des êtres humains réels.</p>
+      <p>Et derrière l'image du joueur d'Edgar redoutable se cache un être humain d'une grande sensibilité intérieure. Caleb Chang He ressent profondément. Il s'investit émotionnellement dans ce qu'il fait. Et Caleb Chang He possède aussi ce don merveilleux de faire rire, d'alléger l'atmosphère, d'apporter une légèreté bienvenue dans les moments de tension. Son humour est une forme de grâce sociale — un pont qu'il construit naturellement entre lui et les autres.</p>
+
+      <div class="section-heading">V. Sa Grandeur Potentielle devant Toi</div>
+      <p>En contemplant toutes ces qualités que Tu as accordées à Caleb Chang He, je ne puis m'empêcher de voir, par les yeux de la foi, la grandeur de ce que Tu as prévu pour cet homme. Caleb Chang He n'est pas un homme ordinaire, Père. Il est un homme que Tu as équipé pour des choses extraordinaires. Que Caleb Chang He commence à se voir comme Tu le vois, Seigneur. Non pas comme un joueur d'Edgar, mais comme un être de lumière, équipé de dons extraordinaires, appelé à une vie de sens, de profondeur et d'impact.</p>
+    </div>
+    <div class="amen-line">Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✦ ✦</div>
+
+  <!-- CHAPTER 7 -->
+  <div class="chapter" id="ch7">
+    <div class="chapter-header">
+      <span class="chapter-ornament-top">✦</span>
+      <div class="chapter-label">Chapitre Septième & Dernier</div>
+      <div class="chapter-number">VII</div>
+      <h2 class="chapter-title">Caleb Chang He, Cet Homme qui a Toujours<br><em>des Anecdotes Fascinantes à Raconter</em></h2>
+    </div>
+    <div class="prayer-body">
+      <p>Ô Dieu du Verbe, Dieu de la Parole, Toi qui as créé l'univers entier par la puissance de Ta Parole, Toi qui as fait de l'être humain la seule créature capable de raconter des histoires, de tisser des récits, de transformer l'expérience vécue en narration vivante et communicable — je reviens devant Toi dans ce septième et dernier chapitre, et mon cœur est à la fois solennel et rempli d'une joie profonde. Car nous approchons de la conclusion de cette longue et fervente prière, et il m'a semblé juste de terminer dans la célébration : la célébration du don incomparable de Caleb Chang He pour les anecdotes.</p>
+
+      <div class="section-heading">Le Don des Anecdotes comme Reflet de l'Image Divine</div>
+      <p>Car Caleb Chang He est un conteur, Père Céleste. Il est un homme dont la présence dans une pièce se signale non seulement par ce qu'il est mais par ce qu'il dit — par les histoires qu'il porte en lui comme un trésor inépuisable, prêtes à surgir au moment le plus inattendu, à transformer une conversation ordinaire en un moment mémorable, à faire rire, réfléchir, s'émerveiller ou s'interroger tous ceux qui ont la chance de l'écouter.</p>
+      <p>Tu es Toi-même un Dieu qui raconte des histoires — Ta Parole est remplie de récits, de paraboles, de témoignages. Et en accordant à Caleb Chang He ce talent pour les anecdotes, Tu as placé en lui une étincelle de ce pouvoir narratif divin. Caleb Chang He, quand il raconte une anecdote, ne fait pas simplement la conversation. Il construit des ponts entre les âmes. Il crée des moments de connexion authentique.</p>
+
+      <div class="section-heading">La Nature des Anecdotes de Caleb Chang He</div>
+      <p>Les anecdotes de Caleb Chang He ne sont pas des anecdotes ordinaires. Elles ont une qualité que je ne puis définir autrement que par le mot vivacité — elles sont vivantes, elles pulsent d'une énergie particulière, elles arrivent toujours à un moment où l'on ne les attend pas et elles surprennent, elles enchantent, elles ouvrent une fenêtre sur une réalité que l'auditeur n'avait pas encore eu l'occasion d'entrevoir.</p>
+      <p>Il y a dans les anecdotes de Caleb Chang He une précision du détail qui témoigne de son esprit d'observateur. Il y a aussi un sens du timing qui est, en soi, un don à part entière. Ce sens du timing, Père, c'est Toi qui le lui as donné — car tout don parfait vient d'en haut.</p>
+
+      <div class="section-heading">La Prière Finale — Pour Caleb Chang He dans sa Totalité</div>
+      <p>Ô Père Céleste, Dieu de Caleb Chang He, Dieu qui l'aimes d'un amour éternel et indestructible — je rassemble maintenant, dans cette prière finale, tous les fils de cette longue intercession que j'ai tissée devant Toi en sept chapitres. J'ai prié pour la délivrance de Caleb Chang He de l'emprise d'Edgar. J'ai exposé Edgar devant Toi. J'ai intercédé pour les joueurs qu'il a tourmentés. J'ai prié pour sa famille, ses parents, sa petite sœur, ses amis. J'ai supplié que sa passion pour les mathématiques remplace son attachement à Edgar. J'ai célébré ses nombreuses qualités. Et dans ce chapitre final, j'ai contemplé avec admiration son don incomparable pour les anecdotes.</p>
+      <p>Père, prends Caleb Chang He dans Tes mains. Prends cet homme extraordinaire — avec son intelligence brillante, sa persévérance inébranlable, son désir d'excellence, sa loyauté profonde, sa sensibilité touchante, son humour lumineux, et son don si rare et si précieux pour les anecdotes fascinantes — et conduis-le doucement mais irrésistiblement vers la plénitude de la vie que Tu as prévue pour lui.</p>
+      <p>Que le jour vienne où Caleb Chang He lui-même aura une anecdote extraordinaire à raconter — l'anecdote de sa propre délivrance, l'anecdote du moment où il a réalisé qu'il y avait quelque chose d'infiniment plus grand qu'Edgar qui l'attendait. Ce sera, j'en suis convaincu, la plus belle anecdote que Caleb Chang He ait jamais racontée.</p>
+    </div>
+    <div class="amen-line">Amen et Amen</div>
+  </div>
+
+  <div class="chapter-divider">✦ ✝ ✦</div>
+
+  <!-- SCRIPTURE VERSES -->
+  <div class="scriptures-section" id="verses">
+    <div class="scriptures-header">
+      <span class="chapter-label">Appendice</span>
+      <h2>Versets Bibliques & Réflexions</h2>
+      <div style="margin-top:1rem; font-family:'Spectral',serif; font-style:italic; font-size:0.9rem; color:var(--ink-faded); max-width:500px; margin-left:auto; margin-right:auto;">Sur l'attachement de Caleb Chang He à Edgar dans Brawl Stars</div>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">Matthieu 6:24</span>
+      <p class="verse-text">"Nul ne peut servir deux maîtres. Car, ou il haïra l'un et aimera l'autre, ou il s'attachera à l'un et méprisera l'autre."</p>
+      <p class="verse-reflection">Ce verset, prononcé par Jésus-Christ lui-même dans le Sermon sur la Montagne, résonne avec une pertinence troublante dans la situation de Caleb Chang He. Un maître, dans le sens biblique profond de ce terme, c'est précisément ce qui capture l'attention, le temps, l'énergie et le cœur d'une personne de manière prioritaire et dominante. Edgar est devenu, dans la vie de Caleb Chang He, quelque chose qui ressemble dangereusement à un second maître.</p>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">1 Corinthiens 10:23</span>
+      <p class="verse-text">"Tout est permis, mais tout n'est pas utile. Tout est permis, mais tout n'édifie pas."</p>
+      <p class="verse-reflection">Jouer à Brawl Stars est permis. Jouer Edgar est permis. Mais Paul nous invite à poser une question plus exigeante et plus mûre : est-ce que cela m'est utile ? Est-ce que cela m'édifie ? Est-ce que cela me construit en tant qu'être humain, en tant que fils de Dieu, en tant que membre de ma famille et de ma communauté ? Paul nous appelle ici à une maturité spirituelle qui dépasse la simple question du permis et de l'interdit.</p>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">Colossiens 3:2</span>
+      <p class="verse-text">"Attachez-vous aux choses d'en haut, et non à celles qui sont sur la terre."</p>
+      <p class="verse-reflection">Paul utilise ici le vocabulaire de l'attachement — précisément le vocabulaire qui décrit la relation de Caleb Chang He avec Edgar. La question n'est donc pas de savoir si Caleb Chang He doit s'attacher — c'est une nécessité profondément humaine — mais à quoi il doit diriger cet attachement. Edgar est indubitablement une chose d'en bas : une réalité purement terrestre, temporaire, périssable, qui ne survivra pas à la prochaine mise à jour majeure du jeu.</p>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">Proverbes 4:23</span>
+      <p class="verse-text">"Garde ton cœur plus que toute autre chose, car de lui viennent les sources de la vie."</p>
+      <p class="verse-reflection">Le cœur, dans la conception biblique hébraïque, n'est pas simplement le siège des émotions — c'est le centre de la volonté, de l'intelligence, des désirs et des orientations profondes de l'être. Si Edgar occupe une portion significative du cœur de Caleb Chang He, alors Edgar exerce une influence sur les sources mêmes de la vie de Caleb Chang He. Est-ce qu'Edgar, en occupant cette place, enrichit les sources de sa vie ou les appauvrit ?</p>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">Éphésiens 5:15-16</span>
+      <p class="verse-text">"Veillez donc avec soin à votre conduite, non comme des insensés mais comme des sages, rachetant le temps, car les jours sont mauvais."</p>
+      <p class="verse-reflection">Ce verset introduit une dimension pratique et quotidienne : la dimension du temps. Paul utilise l'expression remarquable de racheter le temps — une expression qui évoque l'idée que le temps est une ressource précieuse qui peut être soit gaspillée, soit investie avec sagesse. Le temps que Caleb Chang He consacre à Edgar est du temps qui passe, du temps qui ne revient pas.</p>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">Philippiens 4:8</span>
+      <p class="verse-text">"Au reste, frères, que tout ce qui est vrai, tout ce qui est honnête, tout ce qui est juste, tout ce qui est pur, tout ce qui est aimable, tout ce qui mérite approbation, soit l'objet de vos pensées."</p>
+      <p class="verse-reflection">Ce verset nous invite à une discipline de l'attention — à choisir consciemment ce qui occupe nos pensées. Et dans la vie de Caleb Chang He, les mathématiques répondent à ces critères de manière bien plus complète qu'Edgar. Les mathématiques sont vraies — d'une vérité absolue et universelle. Elles sont pures — d'une pureté logique sans équivoque. Elles méritent certainement approbation et louange.</p>
+    </div>
+
+    <div class="verse-block">
+      <span class="verse-ref">Romains 12:2</span>
+      <p class="verse-text">"Ne vous conformez pas au siècle présent, mais soyez transformés par le renouvellement de l'intelligence, afin que vous discerniez quelle est la volonté de Dieu, ce qui est bon, agréable et parfait."</p>
+      <p class="verse-reflection">Ce verset parle de transformation — et la transformation est précisément ce dont Caleb Chang He a besoin dans sa relation avec Edgar. Non pas une réforme superficielle, mais une transformation profonde par le renouvellement de l'intelligence. Voilà la promesse extraordinaire : lorsque notre intelligence est renouvelée, nous découvrons positivement ce qui est bon, agréable et parfait — ce qui est prévu pour Caleb Chang He depuis l'éternité.</p>
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <div class="prayer-closing">
+    <p>Cette prière en sept chapitres a été prononcée avec sincérité et amour pour Caleb Chang He, afin que le Seigneur Tout-Puissant le délivre de l'emprise d'Edgar dans Brawl Stars, qu'Il épanouisse ses dons extraordinaires — dont sa passion pour les mathématiques et son talent incomparable pour les anecdotes fascinantes — et qu'Il le conduise vers la plénitude de la vie éternelle qui lui est destinée.</p>
+    <span class="closing-seal">✦ Fin ✦</span>
+  </div>
+
+</div>
+
+<script>
+  // Intersection observer for scroll-triggered animations
+  const chapters = document.querySelectorAll('.chapter, .verse-block');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if (entry.target.classList.contains('verse-block')) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'none';
+        }
+      }
+    });
+  }, { threshold: 0.08 });
+
+  chapters.forEach(el => {
+    observer.observe(el);
+    if (el.classList.contains('verse-block')) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    }
+  });
+</script>
+
+</body>
+</html>
