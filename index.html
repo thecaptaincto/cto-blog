@@ -1,98 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voices of the World - A Journey Through English Accents</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Captain's Commonplace Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5ead8;
+    --parchment-dark: #e8d5b5;
+    --ink: #2c1a0e;
+    --ink-faded: #5c3d2e;
+    --rust: #8b3a1e;
+    --gold: #c8952a;
+    --gold-light: #e8c05a;
+    --moss: #4a5e3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--parchment);
+    color: var(--ink);
+    font-family: 'Spectral', Georgia, serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Paper texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* Aged paper stain effects */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 20%, rgba(180,130,60,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 85% 75%, rgba(140,90,40,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(200,150,80,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Header */
+  .site-header {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--rust) 0, var(--rust) 2px, transparent 2px, transparent 12px);
+    opacity: 0.6;
+  }
+
+  .header-ornament {
+    font-size: 1.5rem;
+    color: var(--gold);
+    letter-spacing: 0.5em;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+
+  .site-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--ink);
+    line-height: 1.1;
+    text-shadow: 2px 2px 0 rgba(139,58,30,0.15);
+    margin-bottom: 0.5rem;
+  }
+
+  .site-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+  }
+
+  /* Decorative divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rust), transparent);
+  }
+  .divider-symbol {
+    color: var(--rust);
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+
+  /* Main sections grid */
+  .sections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem 5rem;
+  }
+
+  /* Section cards */
+  .section-card {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .section-card:hover { transform: translateY(-4px); }
+
+  .card-inner {
+    background: linear-gradient(145deg, #fdf5e6, #f0e0c0);
+    border: 1px solid rgba(139,58,30,0.25);
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      3px 3px 8px rgba(44,26,14,0.15),
+      inset 0 0 40px rgba(180,130,60,0.06);
+  }
+
+  /* Brush stroke corner decorations */
+  .card-inner::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px;
+    width: 40px; height: 40px;
+    border-top: 3px solid var(--rust);
+    border-left: 3px solid var(--rust);
+    opacity: 0.6;
+  }
+  .card-inner::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; right: -2px;
+    width: 40px; height: 40px;
+    border-bottom: 3px solid var(--rust);
+    border-right: 3px solid var(--rust);
+    opacity: 0.6;
+  }
+
+  /* Faux brush stroke */
+  .brush-accent {
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(139,58,30,0.35), rgba(139,58,30,0.15));
+    border-radius: 0 0 0 4px;
+    transform: skewX(-15deg) translateX(10px);
+  }
+
+  .card-number {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 4rem;
+    color: rgba(139,58,30,0.12);
+    position: absolute;
+    top: 0.5rem; right: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(1px 1px 2px rgba(44,26,14,0.2));
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .card-latin {
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--rust);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .card-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink-faded);
+    margin-bottom: 1.5rem;
+  }
+
+  .card-entries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .entry-tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(139,58,30,0.08);
+    border: 1px solid rgba(139,58,30,0.2);
+    color: var(--ink-faded);
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    border-radius: 1px;
+  }
+
+  .card-cta {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--rust);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s;
+  }
+  .section-card:hover .card-cta { gap: 0.8rem; }
+  .cta-arrow { font-size: 1.1rem; }
+
+  /* Footer */
+  .site-footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(139,58,30,0.2);
+    font-family: 'Spectral', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-faded);
+    opacity: 0.7;
+  }
+
+  /* Wax seal decoration */
+  .wax-seal {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #a03020, #6b1e10);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.1);
+    color: rgba(255,220,180,0.9);
+    z-index: 100;
+    transform: rotate(-15deg);
+    font-family: 'UnifrakturMaguntia', cursive;
+  }
+
+  /* Scroll animation */
+  .section-card {
+    opacity: 0;
+    animation: fadeInUp 0.7s ease forwards;
+  }
+  .section-card:nth-child(1) { animation-delay: 0.1s; }
+  .section-card:nth-child(2) { animation-delay: 0.3s; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .site-header .header-ornament,
+  .site-header .site-title,
+  .site-header .site-subtitle {
+    opacity: 0;
+    animation: fadeInDown 0.8s ease forwards;
+  }
+  .site-header .header-ornament { animation-delay: 0s; }
+  .site-header .site-title { animation-delay: 0.15s; }
+  .site-header .site-subtitle { animation-delay: 0.3s; }
+  .divider { opacity: 0; animation: fadeInDown 0.8s ease 0.45s forwards; }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 </head>
 <body>
-    <div class="ink-splash"></div>
-    
-    <header class="main-header">
-        <div class="brush-stroke"></div>
-        <h1>Voices of the World</h1>
-        <p class="tagline">A journey through the many colors of English</p>
-    </header>
 
-    <main class="container">
-        <section class="intro">
-            <p class="drop-cap">Language is a living tapestry, woven with threads from every corner of our world. English, in particular, has become a global lingua franca—but it speaks with a thousand different voices. Each accent carries within it the history, culture, and spirit of its people.</p>
-            
-            <p>This blog is my exploration of these voices. From the crisp consonants of British Received Pronunciation to the melodic cadences of Nigerian English, from the precise enunciation of Scandinavian speakers to the tonal influences that shape East Asian accents—every variation tells a story.</p>
-            
-            <p>Join me as I dive deep into the phonetic peculiarities, cultural contexts, and beautiful idiosyncrasies that make each English accent unique.</p>
-        </section>
+<header class="site-header">
+  <div class="header-ornament">✦ ✦ ✦</div>
+  <h1 class="site-title">The Captain's Commonplace Book</h1>
+  <p class="site-subtitle">Pensées, prières & réflexions du monde entier</p>
+  <div class="divider"><span class="divider-symbol">❧</span></div>
+</header>
 
-        <nav class="post-grid">
-            <a href="native-accents.html" class="post-card">
-                <div class="card-number">01</div>
-                <h2>Native English Accents</h2>
-                <p>British, American, Canadian, Australian, Irish, and New Zealand—the foundational voices</p>
-                <div class="ink-line"></div>
-            </a>
+<main class="sections-grid">
 
-            <a href="nordic-accents.html" class="post-card">
-                <div class="card-number">02</div>
-                <h2>Nordic & Germanic Excellence</h2>
-                <p>Netherlands, Germany, Norway, Sweden, Finland, Denmark—where precision meets fluency</p>
-                <div class="ink-line"></div>
-            </a>
+  <a href="accents.html" class="section-card">
+    <div class="card-inner">
+      <div class="brush-accent"></div>
+      <div class="card-number">I</div>
+      <span class="card-icon">🗺️</span>
+      <h2 class="card-title">Voices of the World</h2>
+      <p class="card-latin">Vox Mundi — English Accents</p>
+      <p class="card-desc">A journey through the many colors of English. From the crisp consonants of British Received Pronunciation to the melodic cadences of Nigerian English — every accent carries a civilisation within it.</p>
+      <div class="card-entries">
+        <span class="entry-tag">Native Accents</span>
+        <span class="entry-tag">Nordic & Germanic</span>
+        <span class="entry-tag">Romance Languages</span>
+        <span class="entry-tag">Eastern European</span>
+        <span class="entry-tag">African English</span>
+        <span class="entry-tag">South & East Asian</span>
+      </div>
+      <div class="card-cta">Enter the Archive <span class="cta-arrow">→</span></div>
+    </div>
+  </a>
 
-            <a href="latin-accents.html" class="post-card">
-                <div class="card-number">03</div>
-                <h2>Romance Language Influences</h2>
-                <p>French, Italian, Spanish, Portuguese, Québecois, Latin American—passion in every syllable</p>
-                <div class="ink-line"></div>
-            </a>
+  <a href="prayers.html" class="section-card">
+    <div class="card-inner">
+      <div class="brush-accent"></div>
+      <div class="card-number">II</div>
+      <span class="card-icon">🕯️</span>
+      <h2 class="card-title">Prières & Intercessions</h2>
+      <p class="card-latin">Orationes — En Langue Française</p>
+      <p class="card-desc">Une prière en sept chapitres, prononcée avec sincérité et amour. Un voyage de l'inquiétude vers la grâce, de l'ombre vers la lumière, du temporaire vers l'éternel.</p>
+      <div class="card-entries">
+        <span class="entry-tag">L'Appel à la Grâce</span>
+        <span class="entry-tag">La Présentation d'Edgar</span>
+        <span class="entry-tag">Les Victimes</span>
+        <span class="entry-tag">La Famille</span>
+        <span class="entry-tag">Les Mathématiques</span>
+        <span class="entry-tag">Les Anecdotes</span>
+      </div>
+      <div class="card-cta">Ouvrir le Livre de Prières <span class="cta-arrow">→</span></div>
+    </div>
+  </a>
 
-            <a href="eastern-european-accents.html" class="post-card">
-                <div class="card-number">04</div>
-                <h2>Central & Eastern European Voices</h2>
-                <p>Russia, Poland, Czech Republic, Hungary, the Balkans—strength and character</p>
-                <div class="ink-line"></div>
-            </a>
+</main>
 
-            <a href="middle-eastern-accents.html" class="post-card">
-                <div class="card-number">05</div>
-                <h2>Middle Eastern English</h2>
-                <p>Gulf States, Levant—where ancient languages meet modern communication</p>
-                <div class="ink-line"></div>
-            </a>
+<footer class="site-footer">
+  "Omnia tempus habent" — Toutes choses ont leur temps.
+</footer>
 
-            <a href="african-accents.html" class="post-card">
-                <div class="card-number">06</div>
-                <h2>African English Varieties</h2>
-                <p>Kenya, South Africa, Nigeria—richness, rhythm, and resilience</p>
-                <div class="ink-line"></div>
-            </a>
+<div class="wax-seal">C</div>
 
-            <a href="south-asian-accents.html" class="post-card">
-                <div class="card-number">07</div>
-                <h2>South Asian English</h2>
-                <p>India, Pakistan, Bangladesh, Sri Lanka—diverse as the subcontinent itself</p>
-                <div class="ink-line"></div>
-            </a>
-
-            <a href="east-asian-accents.html" class="post-card">
-                <div class="card-number">08</div>
-                <h2>East Asian English</h2>
-                <p>Chinese, Korean, Japanese—unique languages shaping English expression</p>
-                <div class="ink-line"></div>
-            </a>
-
-            <a href="southeast-asian-accents.html" class="post-card">
-                <div class="card-number">09</div>
-                <h2>Southeast Asian English</h2>
-                <p>Singapore, Malaysia, Philippines, Thailand, Vietnam, Indonesia—vibrant and varied tones</p>
-                <div class="ink-line"></div>
-            </a>
-        </nav>
-
-        <footer class="site-footer">
-            <div class="brush-stroke-small"></div>
-            <p>Every accent is a universe unto itself. Let's explore them together.</p>
-        </footer>
-    </main>
 </body>
 </html>
