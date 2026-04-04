@@ -350,128 +350,217 @@ body {
 }
 
 /* ============================================
-   BEACH THEME — main page (body.beach-theme)
+   OCEAN THEME — main page (body.beach-theme)
    ============================================ */
 
 body.beach-theme {
-    background:
-        linear-gradient(180deg,
-            #d4eef9 0%,
-            #a8d8ea 12%,
-            #5ba8c9 28%,
-            #1a6fa8 48%,
-            #0d4f7a 65%,
-            #c9a97a 80%,
-            #b8895a 100%
-        );
+    /* Pure deep-ocean gradient: pale horizon sky → rich teal → midnight navy */
+    background: linear-gradient(
+        180deg,
+        #cce9f5 0%,
+        #8ecae6 10%,
+        #219ebc 25%,
+        #126782 42%,
+        #023e59 60%,
+        #012a40 78%,
+        #011d2e 100%
+    );
     background-attachment: fixed;
-    background-size: cover;
+    color: var(--ink-black);
 }
 
-/* Ocean shimmer overlay */
+/* Soft light shimmer — like sunlight hitting open water */
 body.beach-theme .ink-splash {
-    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.18) 0%, transparent 65%);
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse at 65% 20%,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(140, 210, 240, 0.06) 40%,
+        transparent 70%
+    );
 }
 
-/* Animated wave bar at the top of the page */
+/* Wave layer 1 */
 body.beach-theme::before {
     content: '';
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 200%;
-    height: 120px;
-    background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='rgba(255,255,255,0.12)' d='M0,60 C360,100 720,20 1080,60 C1260,80 1350,40 1440,60 L1440,0 L0,0 Z'/%3E%3C/svg%3E") repeat-x;
-    background-size: 720px 120px;
-    animation: waveSlide 8s linear infinite;
+    height: 160px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160'%3E%3Cpath fill='rgba(255,255,255,0.06)' d='M0,80 C240,130 480,30 720,80 C960,130 1200,30 1440,80 L1440,160 L0,160 Z'/%3E%3C/svg%3E") repeat-x bottom;
+    background-size: 720px 160px;
+    animation: waveDrift 10s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 0;
 }
 
+/* Wave layer 2 — offset, slower */
 body.beach-theme::after {
     content: '';
     position: fixed;
-    top: 0;
-    left: -50%;
+    bottom: 0;
+    left: -30%;
     width: 200%;
-    height: 80px;
-    background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80'%3E%3Cpath fill='rgba(255,255,255,0.07)' d='M0,40 C360,70 720,10 1080,40 C1260,55 1350,20 1440,40 L1440,0 L0,0 Z'/%3E%3C/svg%3E") repeat-x;
-    background-size: 960px 80px;
-    animation: waveSlide 12s linear infinite reverse;
+    height: 110px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 110'%3E%3Cpath fill='rgba(33,158,188,0.12)' d='M0,55 C300,95 600,15 900,55 C1100,80 1280,25 1440,55 L1440,110 L0,110 Z'/%3E%3C/svg%3E") repeat-x bottom;
+    background-size: 960px 110px;
+    animation: waveDrift 14s ease-in-out infinite alternate-reverse;
     pointer-events: none;
     z-index: 0;
 }
 
-@keyframes waveSlide {
+@keyframes waveDrift {
     from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    to   { transform: translateX(-8%); }
 }
 
-/* Header text */
+/* ── Header ── */
 body.beach-theme .main-header h1 {
     color: #ffffff;
-    text-shadow: 0 2px 24px rgba(0, 40, 80, 0.5);
+    text-shadow: 0 2px 30px rgba(0, 30, 60, 0.6);
 }
 
 body.beach-theme .tagline {
-    color: rgba(255, 255, 255, 0.92);
-    text-shadow: 0 1px 8px rgba(0, 40, 80, 0.4);
+    color: rgba(200, 235, 250, 0.95);
+    text-shadow: 0 1px 10px rgba(0, 30, 60, 0.4);
 }
 
 body.beach-theme .brush-stroke {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9) 20%, rgba(255,255,255,0.9) 80%, transparent);
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255,255,255,0.85) 20%,
+        rgba(255,255,255,0.85) 80%,
+        transparent
+    );
 }
 
-/* Intro box */
+/* ── Blog section headings ── */
+.blog-section {
+    margin-bottom: 70px;
+}
+
+.section-label {
+    display: inline-block;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 36px;
+    opacity: 0.85;
+}
+
+.section-divider {
+    width: 60px;
+    height: 3px;
+    margin-bottom: 36px;
+    border: none;
+    border-radius: 2px;
+}
+
+body.beach-theme .section-label {
+    color: #8ecae6;
+}
+
+body.beach-theme .section-title {
+    color: #ffffff;
+    text-shadow: 0 1px 12px rgba(0, 30, 60, 0.4);
+}
+
+body.beach-theme .section-subtitle {
+    color: rgba(200, 235, 250, 0.88);
+}
+
+body.beach-theme .section-divider {
+    background: linear-gradient(90deg, #219ebc, #8ecae6);
+}
+
+/* ── Intro box ── */
 body.beach-theme .intro {
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-left: 3px solid #1a6fa8;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-left: 3px solid rgba(142, 202, 230, 0.7);
+    color: rgba(230, 248, 255, 0.95);
 }
 
 body.beach-theme .intro::before {
-    border-color: rgba(255, 255, 255, 0.45);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Cards */
+body.beach-theme .drop-cap::first-letter {
+    color: #8ecae6;
+}
+
+/* ── Cards ── */
 body.beach-theme .post-card {
-    background: rgba(255, 255, 255, 0.88);
-    border-color: #1a6fa8;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(142, 202, 230, 0.35);
+    color: #e6f4fb;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+body.beach-theme .post-card h2 {
+    color: #ffffff;
+}
+
+body.beach-theme .post-card p {
+    color: rgba(200, 235, 250, 0.82);
 }
 
 body.beach-theme .post-card:hover {
-    box-shadow: 8px 8px 0 #0d4f7a;
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(142, 202, 230, 0.7);
+    box-shadow: 0 8px 32px rgba(0, 20, 50, 0.4), 0 0 0 1px rgba(142, 202, 230, 0.3);
+    transform: translateY(-6px);
 }
 
 body.beach-theme .post-card::before {
-    background: linear-gradient(90deg, transparent, rgba(26, 111, 168, 0.07), transparent);
-}
-
-body.beach-theme .ink-line {
-    background: #1a6fa8;
+    background: linear-gradient(90deg, transparent, rgba(142, 202, 230, 0.08), transparent);
 }
 
 body.beach-theme .card-number {
-    color: #a8d8ea;
+    color: rgba(142, 202, 230, 0.5);
 }
 
-/* Footer */
+body.beach-theme .ink-line {
+    background: linear-gradient(90deg, #219ebc, #8ecae6);
+}
+
+/* ── Footer ── */
 body.beach-theme .site-footer p {
-    color: rgba(255, 255, 255, 0.88);
-    text-shadow: 0 1px 6px rgba(0, 40, 80, 0.4);
+    color: rgba(200, 235, 250, 0.75);
 }
 
 body.beach-theme .brush-stroke-small {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.75) 20%, rgba(255,255,255,0.75) 80%, transparent);
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(142, 202, 230, 0.6) 20%,
+        rgba(142, 202, 230, 0.6) 80%,
+        transparent
+    );
 }
 
 /* ============================================
-   END BEACH THEME
+   END OCEAN THEME
    ============================================ */
 
 /* Responsive design */
